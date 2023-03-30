@@ -3,9 +3,8 @@ import pyopenjtalk
 
 pyopenjtalk._lazy_init()
 
-from text.japanese import japanese_to_romaji_with_accent
-
 def japanese_cleaners(text):
+    from text.japanese import japanese_to_romaji_with_accent
     text = f'[JA]{text}[JA]'
     text = re.sub(r'\[JA\](.*?)\[JA\]', lambda x: japanese_to_romaji_with_accent(
         x.group(1)).replace('ts', 'ʦ').replace('u', 'ɯ').replace('...', '…')+' ', text)
@@ -15,7 +14,7 @@ def japanese_cleaners(text):
 
 def korean_cleaners(text):
     '''Pipeline for Korean text'''
-    from text.korean import latin_to_hangul, number_to_hangul, divide_hangul
+    from text.korean import latin_to_hangul, number_to_hangul, divide_hangul, korean_to_lazy_ipa, korean_to_ipa
     text = latin_to_hangul(text)
     text = number_to_hangul(text)
     text = divide_hangul(text)
